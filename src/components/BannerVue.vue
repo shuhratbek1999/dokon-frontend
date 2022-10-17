@@ -2,15 +2,16 @@
     <div>
         <div class="banner"> 
       <ul>
-        <li><img src="../../public/footer/artel.png" width="100px" alt="artel"></li>
-        <li><img src="../../public/footer/acer.jpg" width="100px" alt="acer"></li>
-        <li><img src="../../public/footer/apple.png" width="100px" alt="apple"></li>
-        <li><img src="../../public/footer/hiaomi.png" width="100px" alt="hiaomi"></li>
-        <li><img src="../../public/footer/hp.jpg" width="80px" alt="hp"></li>
-        <li><img src="../../public/footer/huawe.png" width="100px" alt="huawe"></li>
-        <li><img src="../../public/footer/lenovo.png" width="100px" alt="lenovo"></li>
-        <li><img src="../../public/footer/midea.png" width="100px" alt="midea"></li>
-        <li><img src="../../public/footer/nokia.webp" width="100px" alt="nokia"></li>
+        <li v-for="(item, index) in images" :key="index">
+          <img :src="item.url" alt="rasm" width="100px">
+        </li>
+        <!-- <swiper :options="myOptions">
+           <swiper-slide>  -->
+               <!-- <img :src="item.url" width="100px" alt="artel">  -->
+               <!-- slide 1
+            </swiper-slide>
+            <swiper-slide> slide 2 </swiper-slide>
+        </swiper> -->
       </ul>
          </div>
          <div class="apps">
@@ -113,12 +114,25 @@
 </template>
 
 <script>
+// import { Swiper, SwiperSlide } from "vue-awesome-swiper"
 export default {
     name: 'PortfoliyaBannerVue',
-
+    // components:{Swiper, SwiperSlide},
     data() {
         return {
-            
+            images: [
+              {url: require("../../public/footer/artel.png")},
+              {url: require("../../public/footer/acer.jpg")},
+              {url: require("../../public/footer/apple.png")},
+              {url: require("../../public/footer/hiaomi.png")},
+              {url: require("../../public/footer/hp.jpg")},
+              {url: require("../../public/footer/huawe.png")},
+              {url: require("../../public/footer/lenovo.png")},
+              {url: require("../../public/footer/nokia.webp")}
+            ],
+            myOptions:{
+              slidesPerView: 4
+            }
         };
     },
 

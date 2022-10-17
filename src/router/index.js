@@ -7,6 +7,7 @@ const Login = () => import('../pages/login/Index.vue')
 const productInfo = () => import('../components/productInfo.vue')
 const korzinkaInfo = () => import('../pages/korzinkaVue.vue')
 const tolovInfo = () => import('../pages/tolovMalumotlari.vue')
+const productAdd = () => import('../components/AddProduct.vue')
 Vue.use(VueRouter)
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/info',
     name: 'ProductInfo',
     component: productInfo
+  },
+  {
+    path: '/product',
+    name: 'ProductAdd',
+    component: productAdd
   },
   {
     path: '/korzinka_info',
@@ -77,5 +83,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  if(to.name=='LoginVue' && localStorage.getItem("token")){
+     return next('/home')
+  }
+  return next()
+})
 export default router

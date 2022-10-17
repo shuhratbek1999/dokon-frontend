@@ -30,18 +30,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  min-height: 600px;
+  min-height: 100vh;
+}
+nav{
+  background-color: azure;
 }
 
-nav {
-  padding: 30px 5px;  
-  background-color: rgb(238, 243, 245);
-}
 
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  border: 1px solid black;
 }
 
 nav a.router-link-exact-active {

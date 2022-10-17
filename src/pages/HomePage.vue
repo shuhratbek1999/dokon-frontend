@@ -1,7 +1,6 @@
 <template>
   <div class="Home">
-    <Header />
-    {{$store.state.sev}}
+    <Header @searchProduct="ProductSearch" />
   <div class="carusels">
      <b-carousel
     id="carousel-fade"
@@ -29,7 +28,6 @@
   <img src="../../public/rasm.jpg" alt="" height="440px">
   </div>
    <div class="col-4 mt-4">
-    <input type="text" v-model="search" class="form-control">
    </div>
   <div class="categories">
         <div class="categoriya">
@@ -43,9 +41,10 @@
         </div>
         <div class="categorie">
              <ul>
-              <li v-for="(product, index) in Filtered" :key="index">
+              <li v-for="(product, index) in images" :key="index">
                 <p class="check"><b-icon class="icons" @click="cart(product)" icon="cart-check" aria-hidden="true"></b-icon></p>
-                <p class="heart"><b-icon class="icons" @click="heart(product)" icon="heart" aria-hidden="true"></b-icon></p>
+                <p class="hearts" v-if="hearttt && productId == product.id"><b-icon class="hearts" @click="heart(product)" icon="heart-fill" aria-hidden="true"></b-icon></p>
+                <p class="heart" v-else><b-icon class="icons" @click="heart(product)" icon="heart" aria-hidden="true"></b-icon></p>
                 
                 <div style="margin-top: 20px">
                   <img :src="product.img" alt="" width="200px" height="140px">
@@ -122,13 +121,24 @@ import Header from "../components/AppHeader.vue"
     },
     data() {
       return {
+        searchList: [],
         slide: 0,
         sliding: null,
         products: [],
         production: [],
         productions: [],
         books: [],
-        search: ''
+        search: '',
+        productId: null,
+        hearttt: false,
+        fullproduct: [
+          {id: 1, title: "asaxiy badiiy kitoblari", price: 10000, img: require('../../public/product/kitob.jpg')},
+          {id: 1, title: "asaxiy badiiy kitoblari", price: 120000, img: require('../../public/product/muz.jpg')},
+          {id: 1, title: "asaxiy badiiy kitoblari", price: 10000, img: require('../../public/product/note10.jpg')},
+          {id: 1, title: "asaxiy badiiy kitoblari", price: 10000, img: require('../../public/product/play.jpg')},
+          {id: 1, title: "asaxiy badiiy kitoblari", price: 10000, img: require('../../public/product/sich.jpg')},
+          {id: 1, title: "asaxiy badiiy kitoblari", price: 10000, img: require('../../public/product/telefon.jpg')},
+        ]
       }
     },
     methods: {
@@ -149,10 +159,13 @@ import Header from "../components/AppHeader.vue"
           url: 'product/all'
         }).then(res => {
           self.products = res.data.data;
-            for(let key of res.data.data){
-              console.log(key.img);
-            }
+          this.$store.commit("PRODUCT_ALL", res.data.data)
   })
+      },
+       ProductSearch(item){
+        this.searchList = this.products.filter(el=>{
+            return el.title.toLowerCase().match(item.toLowerCase())
+          })
       },
       cart(product){
          this.production.push(product);
@@ -161,8 +174,14 @@ import Header from "../components/AppHeader.vue"
          
       },
       heart(product){
-        console.log(product);
-        this.$store.dispatch('SevimliQoshish', product)
+        if(this.productId == product.id){
+            this.hearttt = !this.hearttt
+        }
+        else{
+           this.hearttt = false
+        }
+        this.productId = product.id;
+        this.$store.dispatch('sevimli/SevimliQoshish', product)
       },
       KorzinkaInfo(product){
          this.$store.dispatch('korzinkaInformation', product)
@@ -188,13 +207,15 @@ import Header from "../components/AppHeader.vue"
     mounted(){
       this.Data();
       this.book();
+      console.log(this.products);
+      setTimeout(() => {
+         this.searchList = [...this.products]
+      }, 1000);
     },
     computed:{
-      Filtered(){
-        return this.products.filter(x => {
-          return x.title.match(this.search)
-        })
-      }
+       images(){
+        return this.$store.state.all_product
+       }
     }
   }
 </script>
@@ -301,7 +322,7 @@ import Header from "../components/AppHeader.vue"
 .categorie{
   margin: 80px 0px 0px 15px;
   width: 78%;
-  height: 100vh;
+  min-height: 100vh;
 } 
  .categorie ul li{
   padding: 0px 20px;
@@ -325,6 +346,14 @@ import Header from "../components/AppHeader.vue"
   right: -5px;
   top: 40px;
   font-size: 20px;
+}
+.hearts{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 7.5px;
+  top: 23px;
+  font-size: 16px;
 }
 .check{
   position: absolute;

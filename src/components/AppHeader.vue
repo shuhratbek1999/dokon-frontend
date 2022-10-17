@@ -3,7 +3,7 @@
         <ul class="header">
             <li><h4 class="text-info">Online Market</h4></li>
             <li class="li_input">
-                <input type="search" v-model.lazy="search" class="form-control" placeholder="Search...">
+                <input type="search" @input="SearchProduct" v-model="search" class="form-control" placeholder="Search...">
             </li>
             <li>
                 <b-icon class="icons" icon="credit-card" aria-hidden="true"></b-icon>
@@ -158,15 +158,15 @@
                               <p>Malumotlar mavjud emas</p>
                          </div>
                      </b-modal>
-                <span class="soni"> {{$store.getters.sevimliLength}} </span>
+                <span class="soni"> {{$store.getters['sevimli/sevimliLength']}}</span>
             </li>
             <li class="link">
                 <b-icon class="icons" icon="person-circle" aria-hidden="true"></b-icon>
                 <router-link to="/" class="logn"> Kabinet </router-link>
             </li>
         </ul>
+        
         <MenuHeader class="menus" />
-        {{$store.getters}}
     </div>
 </template>
 
@@ -226,19 +226,18 @@ export default {
         }
          }
     },
-    watch:{
-       search(){
-          console.log('salom');
-       }
-    },
     mounted() {
         this.regions(),
-        this.districts()
+        this.districts(),
+        console.log("salom", this.$store.state.sevimli.sev);
     },
     computed:{
          
     },
     methods: {
+        SearchProduct(){
+           this.$emit("searchProduct", this.search)
+        },
         Trek(){
           this.$router.push({path: "/yetkizish"})
         },
@@ -246,12 +245,12 @@ export default {
             this.savatchalar = this.$store.state.products;
         },
         ...mapActions(['SavatchaDelete']),
-        ...mapActions(['SevimliDelete']),
+        ...mapActions('sevimli',['SevimliDelete']),
         trash(product){
          this.SavatchaDelete(product)
         },
         sevimli(){
-            this.sevimlilar = this.$store.state.sev;
+            this.sevimlilar = this.$store.state.sevimli.sev;
         },
         sevTrash(sevimli){
             console.log(sevimli);
@@ -260,8 +259,8 @@ export default {
         korzinka(id,product){
          this.savatchalar.push(product);
          this.$store.state.products = this.savatchalar
-         let index = this.$store.state.sev.findIndex(x => x.id == id);
-         this.$store.state.sev.splice(index, 1);
+         let index = this.$store.state.sevimli.sev.findIndex(x => x.id == id);
+         this.$store.state.sevimli.sev.splice(index, 1);
         },
         buyurtmalar(){
             let self = this;

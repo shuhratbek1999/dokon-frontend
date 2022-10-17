@@ -14,11 +14,14 @@ export default {
     },
 
     mounted() {
-        
+        this.online();
+        console.log(this.$store.state.onlinetv);
     },
 
     methods: {
-        
+        online(){
+            this.$store.dispatch('online_tv')
+        }
     },
 };
 </script>

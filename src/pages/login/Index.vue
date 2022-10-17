@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <p class="alert alert-danger">{{$store.state.errorr}}</p>
+        <!-- <p class="alert alert-danger">{{$store.state.errorr}}</p> -->
         <form @submit.prevent class="form">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Phone Number</label>
@@ -102,6 +102,7 @@ export default {
                 data: self.form
             }).then(res => {
                 if(res.data.error == false){
+                    localStorage.setItem("token", res.data.data.token) 
                     self.$router.push({ path: '/home' });
                 }
                 else{
@@ -162,6 +163,8 @@ export default {
     margin: 10px 0px;
 }
 .login{
+    width: 100%;
+    height: 560px;
     display: flex;
     flex-direction: column;
     align-items: center;

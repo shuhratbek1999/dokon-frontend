@@ -47,7 +47,7 @@ export default {
             this.Informations.push(this.$store.state.products)
         },
         heart(product){
-            this.$store.dispatch('SevimliQoshish', product)
+            this.$store.dispatch('sevimli/SevimliQoshish', product)
         }
     },
 };

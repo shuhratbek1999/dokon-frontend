@@ -1,7 +1,6 @@
 <template>
     <div>
       <AppHeader />
-      {{user}}
          <div class="news-header">
               <div v-for="item in News" :key="item.id" class="news">
                    <p style="font-size: 26px; font-weight: bolder">{{item.title}}</p>

@@ -4,7 +4,6 @@ import Vue from 'vue'
 import axios from "axios";
 import VueAxios from "vue-axios";
 import { store } from "./store";
-
 import { BAlert } from 'bootstrap-vue'
 Vue.component('b-alert', BAlert)
 import Vuelidate from "vuelidate";
@@ -44,7 +43,6 @@ window.axios.interceptors.response.use(
       router.push("/404");
       store.state.errorr = error.response.data.message;
     } else {
-      console.log(error.response);
       store.state.errors = error.response.data.message;
     }
     return Promise.reject(error);

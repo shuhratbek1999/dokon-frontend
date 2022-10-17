@@ -1,24 +1,14 @@
 <template>
    <div>
 <Header />
-     <div style="margin: 30px auto; border: 1px solid black; padding: 20px; text-align: center; width: 500px">
-        <h1>Vue Calendar</h1>
-        <section class="d-flex justify-content-center headr">
-            <h3>{{daysInMonth(currentYear, currentMonth)}} - </h3>
-            <h3> {{currentMonthName}} </h3>
-        <h3> - {{currentYear}} </h3>
-        </section>
-   <section class="d-flex day">
-       <p style="width: 14.28%; font-weight: bolder" v-for="day in days" :key="day">{{day}}</p>
-   </section>
-<section class="d-flex mt-2 calendar" style="flex-wrap: wrap">
-       <p  style="width: 14.28%" v-for="num in startDay()" :key="num"></p>
-       <p  style="width: 14.28%" v-for="num in daysInMonth(currentYear, currentMonth)" :key="num">{{num}}</p>
-</section>
-<section class="d-flex justify-content-between">
-    <button class="btn btn-info" @click="prev">prev</button>
-    <button class="btn btn-danger" @click="next">next</button>
-</section>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6XmEcU2luAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     <div v-for="item in items" :key=item.id>
+        <div v-for="kanal in item" :key="kanal.id" class="canals">
+             <div v-for="can in kanal" :key="can.id" class="canal">
+                <img :src="can.icon.url_100x100" alt="">
+                <p>{{can.name}}</p>
+             </div>
+        </div>
     </div>
    </div>
 </template>
@@ -32,51 +22,37 @@ export default {
     },
     data() {
         return {
-            days: ['Mun', "thu", "whed", "Thu", "Fri", "Sat", "Sun"],
+            items: [],
             
-            currentYear: new Date().getFullYear(),
-            currentMonth: new Date().getMonth()
         };
     },
 
     mounted() {
-        
+        this.getChannels();
+        this.$store.dispatch('channels')
     },
 
     methods: {
-        daysInMonth(year, month){
-             return new Date(year, month, 0).getDate();
-        },
-        startDay(){
-            return new Date(this.currentYear, this.currentMonth, 0).getDay();
-        },
-        prev(){
-            if(this.currentMonth === 0){
-                this.currentMonth = 11;
-                this.currentYear--
-            }
-            else{
-                this.currentMonth--;
-            }
-        },
-        next(){
-            if(this.currentMonth === 11){
-                this.currentMonth =0;
-                this.currentYear++;
-            }
-            else{
-                this.currentMonth++;
-            }
-        }
-    },
-    computed:{
-        currentMonthName(){
-            return new Date(this.currentYear, this.currentMonth).toLocaleString('default', {month: 'long'})
+        getChannels(){
+            this.items.push(this.$store.state.channels)
         }
     }
 };
 </script>
 
 <style lang="css" scoped>
-
+.canals .canal{
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    min-height: 280px;
+    text-align: center;
+    margin: 10px;
+}
+.canals{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 </style>

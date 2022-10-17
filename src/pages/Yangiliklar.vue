@@ -92,7 +92,7 @@ export default {
     margin: 8px;
     box-sizing: border-box;
     border-radius: 20px;
-    background-color: white;
+    background-color: aliceblue;
 }
 .news-right{
     width: 25%;

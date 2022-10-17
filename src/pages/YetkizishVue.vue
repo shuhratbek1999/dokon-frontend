@@ -10,7 +10,7 @@
          <form action="" @submit.prevent>
              <div class="form-group">
                   <label for="nomer" class="form-label" style="color: grey; font-weight: 500">Номер заказа</label>
-                 <input type="number" v-model="deliver.order_id" id="nomer" class="form-control">
+                 <input :class="{'error': errors != null}" type="number" v-model="deliver.order_id" id="nomer" class="form-control">
                  <span v-if="errors != null">
                     <span style="color: red; font-size: 12px" v-if="!errors.order_id.required">number kiritilishi shart</span>
                     <span style="color: red: font-size: 12px" v-if="!errors.order_id.minLength">number eng kami 1 ta</span>
@@ -18,7 +18,7 @@
              </div>
              <div class="form-group">
                   <label for="number" class="form-label" style="color: grey; font-weight: 500">Номер телефона, при заказе </label>
-                <input type="tel" v-model="deliver.phone_number" v-mask="'+999-(99)-999-99-99'" class="form-control">
+                <input type="tel" :class="{'error': errors != null}" v-model="deliver.phone_number" v-mask="'+999-(99)-999-99-99'" class="form-control">
                 <span v-if="errors != null">
                     <span style="color: red; font-size: 12px" v-if="!errors.phone_number.required">phone_number kiritilishi shart</span>
                     <span style="color: red; font-size: 12px" v-if="!errors.phone_number.minLength">number eng kami 12 ta raqam</span>
@@ -79,6 +79,7 @@ export default {
                     data: self.deliver
                 }).then(res => {
                     console.log(res.data.data);
+                    this.$router.push({path: '/home'})
                 }).catch(e => {
                     console.log(e);
                 })
@@ -91,6 +92,9 @@ export default {
 </script>
 
 <style scoped>
+.error{
+    outline: 2px solid red;
+}
 .trek .trek-header{
     width: 98%;
     height: 600px;
