@@ -8,8 +8,10 @@ export const store = new Vuex.Store({
     errors: "",
     errorr: "",
     products: [],
+    product_info: [],
     korzinkaInfo: [],
     test: ['salom'],
+    telefon: [],
     count: 0,
     newsProduct: [],
     news: 0,
@@ -33,7 +35,27 @@ export const store = new Vuex.Store({
       {url: require("../../public/product/mebel.png")},
     ]
   },
-  mutations: {  //methods
+  mutations: {
+      //methods
+      TELEFON(state, payload){
+          for(let i = 0; i <= state.images.length; i++){
+            payload[i].img = state.images[i].url
+            state.telefon = payload
+       }
+      },
+    PRODUCT_CART(state, payload){
+        state.products.push(payload)
+    },
+    PRODUCT_INFO(state, payload, index){
+        if(state.product_info.length > 0){
+           state.product_info.splice(index, 1);
+           state.product_info.push(payload)
+        }
+        else{
+          state.product_info.push(payload)
+        }
+
+    },
     PRODUCT_ALL(state, payload){
       for(let i = 0; i <= state.images.length; i++){
            payload[i].img = state.images[i].url

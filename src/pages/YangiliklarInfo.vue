@@ -1,6 +1,10 @@
 <template>
-    <div>
+    <div class="news_info">
       <AppHeader />
+      <div class="li_inputs">
+                <span><b-icon icon="search" aria-hidden="true"></b-icon> Искать</span>
+                <input type="search" @input="SearchProduct()" v-model="searchs" class="form-control inputs" placeholder="Search...">
+            </div>
          <div class="news-header">
               <div v-for="item in News" :key="item.id" class="news">
                    <p style="font-size: 26px; font-weight: bolder">{{item.title}}</p>
@@ -56,31 +60,5 @@ export default {
 };
 </script>
 <style scoped>
-.news-header{
-    width: 98%;
-    height: 1080px;
-    border-radius: 15px;
-    background-color: white;
-    margin: 0 auto;
-    padding-left: 20px;
-}
-.news-header ul li{
-    list-style: none;
-    font-weight: bold;
-}
-.news-header p{
-    font-weight: bold;
-}
-.news-header .news{
-    padding: 20px;
-}
- .imgs{
-    display: flex;
-    justify-content: center;
- }
- .imgs img{
-    border-radius: 20px;
-    width: 400px;
-    height: 250px;
- }
+
 </style>

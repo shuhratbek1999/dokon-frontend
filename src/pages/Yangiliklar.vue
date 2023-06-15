@@ -2,6 +2,10 @@
     <div class="my-3 news-header">
         <Header />
         <div class="news">
+            <div class="li_input">
+                <span><b-icon icon="search" aria-hidden="true"></b-icon> Искать</span>
+                <input type="search" @input="SearchProduct()" v-model="searchs" class="form-control inputs" placeholder="Search...">
+          </div>
              <ul>
                 <li v-for="product in Filtereds" :key="product.id" @click="News_About(product)">
                     <img :src="product.img" alt="telefon" width="200px" height="180px">
@@ -41,13 +45,14 @@ export default {
            ],
            day: new Date().toLocaleDateString(),
            search: '',
-           user: JSON.parse(localStorage.getItem("user"))
+           user: JSON.parse(localStorage.getItem("user")),
+           soni: 0
         };
     },
     
 
     mounted() {
-        
+
     },
     computed:{
         todos(){
@@ -62,8 +67,8 @@ export default {
 
     methods: {
          News_About(product){
+            this.soni++;
             this.$store.commit("NewsAbout", product)
-            localStorage.setItem("user", JSON.stringify(product))
             this.$router.push({path: "/news_info"})
         }
       }
@@ -71,68 +76,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.error{
-    color: red;
-}
-.news{
-    width: 100%;
-    display: flex;
-}
-.news ul{
-    width: 75%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-.news ul li{
-    width: 31%;
-    list-style: none;
-    text-align: center;
-    padding: 10px;
-    margin: 8px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    background-color: aliceblue;
-}
-.news-right{
-    width: 25%;
-    height: 400px;    
-    position: relative;
-}
-.news-right input{
-    width: 90%;
-    border-radius: 20px;
-    height: 50px;
-    border: 2px solid grey;
-    margin-left: 20px;
-}
 
-.news-right .search{
-    position: absolute;
-    right: 50px;
-    top: 16px;
-    font-weight: bolder;
-}
-.desc{
-    text-align: left;
-    font-size: 16px;
-    color: grey;
-    font-weight: bold;
-}
-.title{
-    font-size: 14px;
-    padding-top: 10px;
-    font-weight: bolder;
-}
-.calendar{
-    padding: 0px;
-    margin: 0px;
-    display: flex;
-    align-items: center;
-}
-.calendar span{
-    margin: 0px 10px;
-    font-size: 12px;
-    font-weight: bold;
-}
 </style>

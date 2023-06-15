@@ -1,65 +1,61 @@
 <template>
   <div class="Home">
     <Header @searchProduct="ProductSearch" />
+    <menu-vue />
   <div class="carusels">
-     <b-carousel
-    id="carousel-fade"
-    style="text-shadow: 0px 0px 2px #000"
-    fade
-    indicators
-    img-width="1024"
-    img-height="300"
-    caption="salom"
-  >
-    <b-carousel-slide
-    class="slider"
-      caption="Asaxiydan yoshlar uchun maxsus el yurt ishonchi"
-      img-src="https://picsum.photos/1024/480/?image=10"
-    ></b-carousel-slide>
-    <b-carousel-slide
-      caption="Second Slide"
-      img-src="https://picsum.photos/1024/480/?image=12"
-    ></b-carousel-slide>
-    <b-carousel-slide
-      caption="Third Slide"
-      img-src="https://picsum.photos/1024/480/?image=22"
-    ></b-carousel-slide>
-  </b-carousel>
-  <img src="../../public/rasm.jpg" alt="" height="440px">
+    <div class="li_input">
+                <span><b-icon icon="search" aria-hidden="true"></b-icon> Искать</span>
+                <input type="search" @input="SearchProduct()" v-model="searchs" class="form-control inputs" placeholder="Search...">
+      </div>
+    <div class="carousel">
+        <div class="image-container" id="imgs">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80" alt="first-image">
+            <img src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80" alt="second-image">
+            <img src="https://images.unsplash.com/photo-1664295776783-6e72b6ab1387?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80" alt="third-image">
+            <img src="https://images.unsplash.com/photo-1663875919989-62c9fa1d2da7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80" alt="fourth-image">
+        </div>
+        <div class="buttons-container">
+            <button id="left" class="btn">Previous</button>
+            <button id="right" class="btn">Next</button>
+        </div>
+    </div>
+  <img class="images" src="../../public/rasm.jpg" alt="" height="440px">
   </div>
-   <div class="col-4 mt-4">
-   </div>
   <div class="categories">
         <div class="categoriya">
-           <div class="books">
           <h4 style="padding-left: 27px">Kitoblar</h4>
-              <ul v-for="book in books" :key="book.id">
-                <li><img width="100px" height="80px" src="../../public/kitob.jpg" alt=""></li>
-                <li><span class="book_title" @click="BookTitle(book)">{{book.title}}</span> <br> <span class="book_desc">{{book.desc}}</span></li>
-              </ul>
-           </div>
+          <ul>
+            <li v-for="book in books" :key="book.id">
+              <img src="../../public/kitob.jpg" alt="" width="80px" height="60px">
+              <p>
+                <span class="book_title" @click="BookTitle(book)">{{book.title}}</span> <br> 
+                <span class="book_desc">{{book.desc}}</span>
+              </p>
+            </li>
+          </ul>
         </div>
-        <div class="categorie">
-             <ul>
-              <li v-for="(product, index) in images" :key="index">
+          <ul class="categorie">
+              <li v-for="(product, index) in searchList" :key="index">
                 <p class="check"><b-icon class="icons" @click="cart(product)" icon="cart-check" aria-hidden="true"></b-icon></p>
-                <p class="hearts" v-if="hearttt && productId == product.id"><b-icon class="hearts" @click="heart(product)" icon="heart-fill" aria-hidden="true"></b-icon></p>
-                <p class="heart" v-else><b-icon class="icons" @click="heart(product)" icon="heart" aria-hidden="true"></b-icon></p>
+                <p class="heart" @click="heart(product)" :class="{hearts: productId == product.id && hearttt}"></p>
                 
-                <div style="margin-top: 20px">
+                <div class="product_img">
                   <img :src="product.img" alt="" width="200px" height="140px">
                 </div>
-                <p style="margin-top: 20px" @click="ProductInfo(product)">{{product.title}}</p>
-                <span style="margin: 10px 0px; display: inline-block"><b-icon class="star" icon="star"></b-icon><b-icon class="star" icon="star"></b-icon><b-icon class="star" icon="star"></b-icon><b-icon class="star" icon="star"></b-icon><b-icon class="star" icon="star"></b-icon></span>
-                <p class="price">{{product.price}}</p>
-                <p>{{Math.floor(product.price / 12)}} / 12 oy</p>
-                <div class="buttons" style="margin: 20px 0px">
-                  <button class="btn" @click="KorzinkaInfo(product)">korzinka</button>
-                  <button @click="Haridlar(product)" class="btn btn1">Harid</button>
+                <div class="title" @click="ProductInfo(product, index)">{{product.title}}</div>
+                <span class="start"><b-icon class="star" icon="star-fill"></b-icon><b-icon class="star" icon="star-fill"></b-icon><b-icon class="star" icon="star-fill"></b-icon><b-icon class="star" icon="star-fill"></b-icon><b-icon class="star" icon="star-fill"></b-icon></span>
+                <p class="price">
+                  {{product.price}} cум <br>
+                    <span>
+                      {{Math.floor(product.price / 12)}} cум / 12 мес
+                    </span>
+                </p>
+                <div class="buttons">
+                  <button class="btn2" @click="KorzinkaInfo(product)">Рассрочка</button>
+                  <button @click="Haridlar(product)" class="btn1">Купитъ клик</button>
                 </div>
               </li>
-             </ul>
-        </div>
+          </ul>
   </div>
   <div class="asaxiy_info">
     <h1>О компании Asaxiy</h1>
@@ -68,7 +64,7 @@
       клиентов, поэтому ресурс постоянно обновляется качественными новинками, имеющими доступную стоимость.
     </p>
       <div class="about">
-             <p style="border-bottom: 1px solid grey; padding-bottom: 20px" v-b-toggle.collapse-1>принцип работы компании
+             <div style="border-bottom: 1px solid grey" class="about_title" v-b-toggle.collapse-1>принцип работы компании
                  <b-collapse id="collapse-1" class="mt-2">
                 <b-card>
                   <p class="card-text">Collapse contents Here</p>
@@ -84,8 +80,8 @@
                   </p>
                 </b-card>
                   </b-collapse>
-              </p>
-                <p v-b-toggle.collapse-2>Наши преимущества
+              </div>
+                <div v-b-toggle.collapse-2>Наши преимущества
                    <b-collapse id="collapse-2" class="mt-2">
                 <b-card>
                   <p class="card-text">Collapse contents Here</p>
@@ -96,9 +92,9 @@
                 </p>
                 </b-card>
                    </b-collapse>
-              </p>
+              </div>
       </div>
-      <p style="margin-top: 10px"> 
+      <p class="about_footer"> 
           "Asaxiy Books" ООО <br>
           Регистрация: 646439 <br>
           ИНН: 305829008 <br>
@@ -108,16 +104,60 @@
   <banners />
   </div>
 </template>
-
 <script>
-// import {mapMutations} from "vuex"
+const imgs = document.getElementById('imgs')
+const leftBtn = document.getElementById('left')
+const rightBtn = document.getElementById('right')
+
+const img = document.querySelectorAll('#imgs img')
+
+let idx = 0
+let interval = setInterval(run, 2000);
+
+function run() {
+    idx++
+
+    changeImage()
+}
+
+function changeImage() {
+    if(idx > img.length -1) {
+        idx = 0
+    }else if(idx < 0) {
+        idx = img.length -1
+    }
+
+    imgs.style.transform = `translateX(${-idx * 500}px)`
+}
+
+function resetInterval() {
+    clearInterval(interval)
+    interval = setInterval(run, 2000)
+}
+
+rightBtn.addEventListener('click', () => {
+    idx++
+    changeImage()
+    resetInterval()
+})
+
+leftBtn.addEventListener('click', () => {
+    idx--
+    changeImage()
+    resetInterval()
+})
+</script>
+<script>
+// import { Carousel, Slide } from 'vue-carousel'
 import axios from 'axios'
 import Banners from '../components/BannerVue.vue'
 import Header from "../components/AppHeader.vue"
+import MenuVue from "../components/MenuVue.vue"
   export default {
     components:{
       Header,
-      Banners
+      Banners,
+      MenuVue
     },
     data() {
       return {
@@ -129,6 +169,7 @@ import Header from "../components/AppHeader.vue"
         productions: [],
         books: [],
         search: '',
+        searchs: '',
         productId: null,
         hearttt: false,
         fullproduct: [
@@ -148,8 +189,8 @@ import Header from "../components/AppHeader.vue"
       onSlideEnd() {
         this.sliding = false
       },
-      ProductInfo(product){
-          this.$store.state.products = product;
+      ProductInfo(product, index){
+          this.$store.commit('PRODUCT_INFO', product, index)
           this.$router.push({path: '/info'})
       },
       Data(){
@@ -174,11 +215,12 @@ import Header from "../components/AppHeader.vue"
          
       },
       heart(product){
-        if(this.productId == product.id){
-            this.hearttt = !this.hearttt
+        // this.hearttt = !this.hearttt
+        if(this.productId != product.id){
+            this.hearttt = true
         }
         else{
-           this.hearttt = false
+           this.hearttt = !this.hearttt
         }
         this.productId = product.id;
         this.$store.dispatch('sevimli/SevimliQoshish', product)
@@ -207,7 +249,6 @@ import Header from "../components/AppHeader.vue"
     mounted(){
       this.Data();
       this.book();
-      console.log(this.products);
       setTimeout(() => {
          this.searchList = [...this.products]
       }, 1000);
@@ -221,8 +262,199 @@ import Header from "../components/AppHeader.vue"
 </script>
 
 
+<style>
+  ::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #008DFFFF; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: green; 
+}
+</style>
 <style scoped>
+@media (max-width: 360px){
+  
 
+
+}
+/* .Home{
+  width: 1360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search_input{
+  display: none;
+}
+.carusels{
+  width: 1000px;
+  /* display: none;
+}
+.imgs{
+  margin: 0px;
+  width: 1000px;
+  height: 300px;
+}
+.images{
+  margin-left: 30px;
+  border-radius: 20px;
+}
+.categories{
+  width: 1300px;
+  display: flex;
+  background-color: rgb(224, 221, 221);
+}
+.categoriya{
+  width: 280px;
+  height: 650px;
+  background-color: white;
+  border-radius: 20px;
+  padding-top: 10px;
+}
+.categoriya ul{
+  list-style: none;
+  padding: 0px;
+}
+.categoriya ul li{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgb(230, 228, 228);
+  padding: 20px 20px;
+}
+.categoriya ul li:nth-child(6){
+  border-bottom: none;
+}
+.categoriya ul li p{
+  padding: 0px 10px;
+  font-size: 15px;
+}
+.categorie{
+  width: 1020px;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  box-sizing: border-box;
+}
+.categorie li{
+  margin: 10px;
+  border-radius: 20px;
+  background-color: white;
+  padding: 11px;
+  position: relative;
+}
+.check{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border-radius: 30%;
+  width: 30px;
+  height: 30px;
+  background-color: #008DFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.heart{
+  position: absolute;
+  top: 50px;
+  right: 15px;
+  border-radius: 30%;
+  width: 30px;
+  height: 30px;
+  background-color: #008DFFFF;
+  background: url("../../public/product/heart.png") 0 0 no-repeat;
+  background-size: 30px;
+  background-position: center;
+}
+.hearts{
+  position: absolute;
+  top: 50px;
+  right: 15px;
+  border-radius: 30%;
+  width: 30px;
+  height: 30px;
+  background-color: #008DFFFF;
+   background: url("../../public/product/hearts.jpg") 0 0 no-repeat;
+   background-size: 30px;
+  background-position: center;
+}
+.buttons{
+  display: flex;
+  justify-content: space-around;
+}
+.buttons .btn1{
+  background-color: #008DFFFF;
+  color: white;
+  font-size: 12px;
+}
+.buttons .btn2{
+  background-color: #00CD98FF;
+  color: white;
+  font-size: 12px;
+}
+.star{
+  color: #008DFFFF;
+}
+.price, .title{
+  font-weight: 600;
+}
+.price span{
+  font-weight: 400;
+}
+.asaxiy_info{
+  width: 1300px;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: white;
+}
+.asaxiy_info p, .asaxiy_info h1{
+  font-size: 12px !important;
+}
+.about{
+  border: 1px solid grey;
+  border-radius: 20px;
+}
+.about div{
+  padding: 10px;
+} */
+
+/* .Home{
+  width: 1320px;
+}
+.math_price{
+  font-weight: 400;
+  font-family: 'Times New Roman', Times, serif;
+}
+.start{
+  margin: 10px 0px; 
+  display: inline-block;
+}
+.product_img{
+margin-top: 20px; 
+padding-right: 10px;
+}
+.title{
+  margin-top: 20px;
+  font-weight: 500;
+  font-style: italic;
+}
+.categorie ul li .title:hover{
+  color: green;
+  cursor: pointer;
+  animation: title 3s linear;
+}
+@keyframes title {
+  0% {color: black;}
+  25%{color: green; transform: rotate(5deg);}
+  50%{color: red; transform: rotate(10deg);}
+  100%{color: black;}
+}
 .asaxiy_info{
     margin: 40px auto;
     padding: 20px 40px;
@@ -266,13 +498,14 @@ import Header from "../components/AppHeader.vue"
   display: flex;
   justify-content: space-between;
   padding: 0px 10px;
+  margin: 20px 0px;
 }
 .buttons .btn{
-   background-color: rgb(67, 245, 192);
+   background-color: #00CD98FF;
    color: white;
 }
 .buttons .btn1{
-  background-color: rgb(24, 154, 206);
+  background-color: #008DFFFF;
 }
 .price{
   font-size: 18px;
@@ -280,6 +513,7 @@ import Header from "../components/AppHeader.vue"
 }
 .star{
   margin: 0px 5px;
+  color: #008DFFFF;
 }
 .carusel{
   margin-top: 30px;
@@ -324,14 +558,18 @@ import Header from "../components/AppHeader.vue"
   width: 78%;
   min-height: 100vh;
 } 
+.categorie ul li:hover{
+  box-shadow: 0px 0px 5px black;
+}
  .categorie ul li{
-  padding: 0px 20px;
+  padding: 0px 20px 0px 20px;
   width: 23%;
   border-radius: 10px;
   background-color: white;
   list-style: none;
   margin: 10px 8px;
   position: relative;
+  transition: all 0.7s ease-out;
 }
 .categorie ul{
   width: 100%;
@@ -366,5 +604,5 @@ import Header from "../components/AppHeader.vue"
   top: 10px;
   background-color: blue;
   color: white;
-}
+} */
 </style>

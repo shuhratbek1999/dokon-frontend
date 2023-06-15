@@ -11,7 +11,7 @@
             <li><router-link to="/tolov"> Bo'lib to'lash </router-link></li>
             <li><router-link to="/kitob"> Kitoblar </router-link></li>
             <li><router-link to="/mebel"> Mebellar </router-link></li>
-            <li><router-link to="/telefon"> Telefonlar </router-link></li>
+            <li><router-link to="/telefonlar"> Telefonlar </router-link></li>
             <li><router-link to="/konditsioner"> Konditsionerlar </router-link></li>
          </ul>
     </div>
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style scoped>
-.content li{
+/* .content li{
     padding: 7px 0px 7px 20px;
 }
 .content li:hover{
@@ -59,23 +59,35 @@ export default {
     justify-content: space-around;
     align-items: center;
     height: 60px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    width: 100% !important;
+    border-top: 1px solid rgb(230, 226, 226);
+    width: 1350px;
 }
-.menu{
+.menu{ 
+    width: 1350px;
     position: relative;
     background-color: white;
-    padding-top: 30px;
+    margin-top: 100px;
 }
-.menu ul li{
+.menu ul li{ 
     list-style: none;
+    font-weight: 500;
 }
 .menu ul li:hover{
     cursor: pointer;
+    color: green;
 }
 .menu ul li a{
     text-decoration: none;
     color: black;
+}
+.menu ul li a:hover{
+    color: gold;
+    transition: all 1s;
+} */
+@media(max-width: 360px){
+    .menu{
+        display: none !important;
+        width: 360px !important;
+    }
 }
 </style>

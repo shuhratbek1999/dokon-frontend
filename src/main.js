@@ -2,9 +2,12 @@ import App from './App.vue'
 import router from './router'
 import Vue from 'vue'
 import axios from "axios";
+import './style.scss'
 import VueAxios from "vue-axios";
 import { store } from "./store";
 import { BAlert } from 'bootstrap-vue'
+import VueCarousel from 'vue-carousel';
+Vue.use(VueCarousel);
 Vue.component('b-alert', BAlert)
 import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);

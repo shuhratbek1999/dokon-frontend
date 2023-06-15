@@ -2,7 +2,7 @@
     <div class="tolov">
         <AppHeader />
         <div class="model">
-            <div class="jonatish" v-if="!tayyor" style="height: 480px">
+            <div class="jonatish" v-if="!tayyor">
                 <b-alert
                 class="alerts"
                 :show="dismissCountDown"
@@ -88,8 +88,7 @@
                     <div class="col-12 buttons">
                          <button 
                             class="btn btn-success text-white" 
-                            @click="buyurtmalar" 
-                            style="padding: 10px 30px">Yuborish
+                            @click="buyurtmalar">Yuborish
                          </button>
                          <!-- {{$v.buyurtma}} -->
                     </div>
@@ -239,31 +238,7 @@ export default {
 };
 </script>
 <style scoped>
-.model{
-    width: 80%;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 15px;
-    padding: 20px 0px;
-}
 
-.jonatish .row{
-    margin-left: 170px;
-}
-.jonatish .row .col-5 label{
-    font-weight: bold;
-    padding-bottom: 5px;
-}
-.error{
-    color: red;
-    font-size: 11px;
-}
-.alerts{
-    width: 700px;
-    left: 400px;
-    position: absolute;
-}
 
 
 </style>

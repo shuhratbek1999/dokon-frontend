@@ -47,9 +47,24 @@ const routes = [
   },
   
   {
-    path: '/telefon',
+    path: '/telefonlar',
     name: 'TeleFonlar',
+    component: () => import('../pages/TelefonLar.vue')
+  },
+  {
+    path: '/telefon',
+    name: 'TeleFonlarS',
     component: () => import('../pages/Telefon.vue')
+  },
+  {
+    path: '/telefon_sort',
+    name: 'TeleFonlarSort',
+    component: () => import('../pages/TelefonSort.vue')
+  },
+  {
+    path: '/telefon_apple',
+    name: 'Iphone',
+    component: () => import('../pages/telefon/ApplePhone.vue')
   },
   {
     path: '/kitob',
@@ -83,10 +98,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-router.beforeEach((to, from, next) => {
-  if(to.name=='LoginVue' && localStorage.getItem("token")){
-     return next('/home')
-  }
-  return next()
-})
+// router.beforeEach((to, from, next) => {
+//   if(to.name=='LoginVue' && localStorage.getItem("token")){
+//      return next('/home')
+//   }
+//   return next()
+// })
 export default router

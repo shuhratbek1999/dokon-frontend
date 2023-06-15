@@ -92,32 +92,6 @@ export default {
 </script>
 
 <style scoped>
-.error{
-    outline: 2px solid red;
-}
-.trek .trek-header{
-    width: 98%;
-    height: 600px;
-    margin: 0 auto;
-    border-radius: 20px;
-    background-color: white;
-    padding: 30px;
-}
-.trek > .trek-header form .form-group{
-    width: 30%;
-    margin: 20px 0px;
-}
-.trek > .trek-header form .form-group input{
-    height: 45px;
-}
-.buttons{
-    transition: .6s;
-} 
-button{
-    transition: .7s;
-}
-.buttons:hover{
-    background-image: linear-gradient(to left, rgba(97, 97, 248, 0.911),rgba(8, 8, 245, 0.911));
-}
+
 
 </style>
