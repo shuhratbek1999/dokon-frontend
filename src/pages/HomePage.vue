@@ -200,7 +200,7 @@ import MenuVue from "../components/MenuVue.vue"
           url: 'product/all'
         }).then(res => {
           for(let key of res.data.data){
-            key.img = "http://localhost:3000/api/v1/admin-app/" + key.img;
+            key.img = "http://185.154.194.108:3001/api/v1/admin-app/" + key.img;
             self.products.push(key);
             this.$store.commit("PRODUCT_ALL", res.data.data)
           }
