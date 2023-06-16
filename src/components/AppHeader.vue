@@ -36,7 +36,7 @@
                                         <td>{{product.title}}</td>
                                         <td>{{product.price}}</td>
                                         <td><button class="btn btn-danger" @click="trash(index)">x</button></td>
-                                        <td><button id="show-btn" v-b-modal.modal-xl style="padding: 6px 10px" @click="jonatish(product.id)" class="btn btn-success">Jo'natish</button></td>
+                                        <td><button style="padding: 6px 10px" @click="jonatish(product)" class="btn btn-success">Jo'natish</button></td>
                                     </tr>
                                     </table>
                                             <b-modal id="modal-xl" size="xl" ref="my-modal"  hide-footer>
@@ -206,7 +206,7 @@
                             <td></td>
                             <td></td>
                             <td><button class="btn btn-danger" @click="trash(index)">x</button></td>
-                            <td><button id="show-btn" v-b-modal.modal-xl style="padding: 6px 10px" @click="jonatish(product.id)" class="btn btn-success">Jo'natish</button></td>
+                            <td><button style="padding: 6px 10px" @click="jonatish(product)" class="btn btn-success">Jo'natish</button></td>
                         </tr>
                         </table>
                                 <b-modal id="modal-xl" size="xl" ref="my-modal"  hide-footer>
@@ -373,7 +373,8 @@ export default {
                 adress: "",
                 date_time: new Date().getTime() / 1000
             },
-            errors: false
+            errors: false,
+            admin: null
         };
     },
     validations:{
@@ -400,12 +401,17 @@ export default {
     },
     mounted() {
         this.regions(),
-        this.districts()
+        this.districts(),
+        this.getUser()
     },
     computed:{
          
     },
     methods: {
+        getUser(){
+           let user = JSON.parse(localStorage.getItem("usersss"))
+           this.admin = user.full_name;
+        },
         SearchProduct(){
            this.$emit("searchProduct", this.search)
         },
@@ -435,33 +441,12 @@ export default {
          this.$store.state.sevimli.sev.splice(index, 1);
         },
         buyurtmalar(){
-            let self = this;
-             if(this.$v.buyurtma.$invalid == false){
-                axios({
-                    method: 'post',
-                    url: '/buyurtma/create',
-                    data: self.buyurtma
-                }).then(res => {
-                        let index = this.$store.state.products.findIndex(x => x.id == res.data.data.product_id)
-                        this.$store.state.products.splice(index,1);
-                        this.$refs['my-modal'].hide();
-                        this.buyurtma = {
-                                        product_id: "",
-                                        phone_number: "",
-                                        full_name: "",
-                                        region_id: "",
-                                        district_id: "",
-                                        adress: "",
-                                        date_time: ""
-                                    }
-                })
-             }
-             else{
-                this.dismissCountDown = this.dismissSecs
-             }
+            this.$router.push({path: '/tolov_info'})
         },
         jonatish(product){
-                this.buyurtma.product_id = product;
+            this.$store.dispatch('productInfoo', product)
+            // this.$store.state.korzinkaInfo.push(product)
+            this.$router.push({path: '/tolov_info'})
         },
         countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown

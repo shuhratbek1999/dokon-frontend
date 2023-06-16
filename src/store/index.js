@@ -17,23 +17,7 @@ export const store = new Vuex.Store({
     news: 0,
     channels: [],
     onlinetv: [],
-    all_product: [],
-    images: [
-      {url: require("../../public/product/note10.jpg")},
-      {url: require("../../public/product/kitob.jpg")},
-      {url: require("../../public/product/muz.jpg")},
-      {url: require("../../public/product/duh.jpg")},
-      {url: require("../../public/product/play.jpg")},
-      {url: require("../../public/product/sich.jpg")},
-      {url: require("../../public/product/sumka.jpg")},
-      {url: require("../../public/product/telefon.jpg")},
-      {url: require("../../public/product/ver.jpg")},
-      {url: require("../../public/product/notebok.jpg")},
-      {url: require("../../public/product/not.jpg")},
-      {url: require("../../public/product/a21.jpg")},
-      {url: require("../../public/product/a71.jpg")},
-      {url: require("../../public/product/mebel.png")},
-    ]
+    all_product: []
   },
   mutations: {
       //methods
@@ -57,10 +41,7 @@ export const store = new Vuex.Store({
 
     },
     PRODUCT_ALL(state, payload){
-      for(let i = 0; i <= state.images.length; i++){
-           payload[i].img = state.images[i].url
            state.all_product = payload
-      }
     },
        savatchaOchirish: (state, product) => {
         state.products.splice(product, 1)
@@ -71,6 +52,9 @@ export const store = new Vuex.Store({
        },
        DeletedID: (state, deleteId) => {
         state.test.splice(deleteId, 1)
+       },
+       KORZINKA_INFOO: (state, product) => {
+          state.korzinkaInfo.push(product)
        },
      
        KORZINKA_INFO: (state, product) => {
@@ -168,6 +152,9 @@ export const store = new Vuex.Store({
 
       korzinkaInformation({commit}, product){
         commit('KORZINKA_INFO', product)
+      },
+      productInfoo({commit}, product){
+        commit('KORZINKA_INFOO', product)
       },
      async channels({commit}){
           let res = await fetch("https://api.allplay.uz/api/v1/iptv/channels");

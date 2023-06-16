@@ -11,6 +11,22 @@
                  <span class="error" v-if="!errors.title.minLength">title minimal uzunligi {{$v.product.title.$params.minLength.min}}</span>
                </span>
             </div>
+             <div class="upload">
+                <label
+                class="btn btn-primary btn-sm"
+            >
+                <b-icon icon="cloud-arrow-up-fill"></b-icon
+                >Юклаш
+            </label>
+            <input
+                type="file"
+                id="files"
+                ref="images"
+                @change="onUploadTashxis()"
+                name="href"
+                class="my-0"
+            />
+             </div>
             <div>
                <label for="description">description</label>
                <input :class="{'input': errors != null}" class="form-control" type="text" v-model="product.desc" name="description" placeholder="...description">
@@ -60,13 +76,15 @@ export default {
                 desc: "",
                 categories: "",
                 color: "",
-                price: 0
+                price: 0,
+                img: ""
             },
             items: [],
             ids: 1,
             errors: null,
             err: "",
-            success: false
+            success: false,
+            imgs:null
         }
     },
     validations:{
@@ -98,15 +116,24 @@ export default {
     },
 
     methods: {
+        onUploadTashxis(){
+          this.imgs = this.$refs.images.files[0]
+        },
         Product(){
             let self = this;
-             if(this.$v.product.$invalid == false){
-                 axios({
-                    method: 'post',
-                    url: 'product/create',
-                    data: self.product
-                  }).then(res => {
+            // let img = document.querySelector('#files');
+            let formData = new FormData();
+            formData.append("title", self.product.title);
+            formData.append("image", this.imgs, this.imgs.filename);
+            formData.append("desc", self.product.desc);
+            formData.append("categories", self.product.categories);
+            formData.append("color", self.product.color);
+            formData.append("price", self.product.price);
+            console.log(formData)
+            if(this.$v.product.$invalid == false){
+                axios.post("product/create", formData).then(res => {
                     if(res.data != undefined){
+                        console.log(res.data)
                         if(res.data.error_code == 400){
                             self.err = res.data.message
                         }
@@ -123,7 +150,7 @@ export default {
                         }, 1000);
                         this.$router.push({path: '/home'})
                     }
-                  })
+                })
              } else{
                 this.errors = this.$v.product
              }

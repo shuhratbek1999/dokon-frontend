@@ -199,8 +199,11 @@ import MenuVue from "../components/MenuVue.vue"
           method: "get",
           url: 'product/all'
         }).then(res => {
-          self.products = res.data.data;
-          this.$store.commit("PRODUCT_ALL", res.data.data)
+          for(let key of res.data.data){
+            key.img = "http://localhost:3000/api/v1/admin-app/" + key.img;
+            self.products.push(key);
+            this.$store.commit("PRODUCT_ALL", res.data.data)
+          }
   })
       },
        ProductSearch(item){

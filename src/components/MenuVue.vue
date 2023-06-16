@@ -12,7 +12,7 @@
             <li><router-link to="/kitob"> Kitoblar </router-link></li>
             <li><router-link to="/mebel"> Mebellar </router-link></li>
             <li><router-link to="/telefonlar"> Telefonlar </router-link></li>
-            <li><router-link to="/konditsioner"> Konditsionerlar </router-link></li>
+            <li v-if="admin == 'Shuhratbek'"><router-link to="/hisobot"> Admin xonasi </router-link></li>
          </ul>
     </div>
 </template>
@@ -24,17 +24,22 @@ export default {
    components:{AppSidebar},
     data() {
         return {
-
+            admin: null
         };
     },
 
     mounted() {
+        this.getUser()
     },
 
     methods: {
         Kategoriya(){
             this.$refs.Sidebar.Sidebars(true)
-        }
+        },
+        getUser(){
+           let user = JSON.parse(localStorage.getItem("usersss"))
+           this.admin = user.full_name;
+        },
     },
 };
 </script>

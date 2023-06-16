@@ -8,6 +8,7 @@ const productInfo = () => import('../components/productInfo.vue')
 const korzinkaInfo = () => import('../pages/korzinkaVue.vue')
 const tolovInfo = () => import('../pages/tolovMalumotlari.vue')
 const productAdd = () => import('../components/AddProduct.vue')
+const Buyurtma = () => import('../pages/AdminPages.vue')
 Vue.use(VueRouter)
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/product',
     name: 'ProductAdd',
     component: productAdd
+  },
+  {
+    path: '/hisobot',
+    name: 'Buyurtmalar',
+    component: Buyurtma
   },
   {
     path: '/korzinka_info',

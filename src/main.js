@@ -13,7 +13,7 @@ import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
 window.axios = require("axios");
-window.axios.defaults.baseURL = "http://194.113.153.92:63030/api/v1/admin-app/";
+window.axios.defaults.baseURL = "http://localhost:3000/api/v1/admin-app/";
 
 import VueTheMask from 'vue-the-mask'
 Vue.use(VueTheMask)

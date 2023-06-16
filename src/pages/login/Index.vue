@@ -114,7 +114,8 @@ export default {
                 data: self.form
             }).then(res => {
                 if(res.data.error == false){
-                    localStorage.setItem("token", res.data.data.token) 
+                    localStorage.setItem("token", res.data.data.token)
+                    localStorage.setItem("usersss", JSON.stringify(res.data.data))
                     self.$router.push({ path: '/home' });
                 }
                 else{

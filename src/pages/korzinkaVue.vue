@@ -92,6 +92,7 @@ export default {
         },
         buyurtma(item){
            this.$store.state.korzinkaInfo = item;
+           console.log(this.$store.state.korzinkaInfo, "storeeee")
            this.$router.push({path: '/tolov_info'})
         }
     },

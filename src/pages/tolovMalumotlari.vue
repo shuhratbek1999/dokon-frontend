@@ -1,6 +1,7 @@
 <template>
     <div class="tolov">
         <AppHeader />
+        {{ProductID}}
         <div class="model">
             <div class="jonatish" v-if="!tayyor">
                 <b-alert
@@ -94,7 +95,6 @@
                     </div>
                 </div>
             </div>
-            <!-- {{$v.buyurtma}} -->
              <div v-else>
                 <b-alert
                 class="alerts"
@@ -141,7 +141,8 @@ export default {
                 date_time: Math.floor(new Date()),
                 pay_type: ""
             },
-            errors: null
+            errors: null,
+            pro_id: 0
         };
     },
     validations:{
@@ -168,16 +169,24 @@ export default {
     },
     computed:{
         ProductID(){
-             return this.$store.state.korzinkaInfo
+             return this.$store.state.korzinkaInfo.forEach(item => item.id)
           }
     },
     mounted() {
         this.regions(),
         this.districts();
+        this.product_id();
     },
     methods: {
+        product_id(){
+           for(let key of this.$store.state.korzinkaInfo){
+               this.pro_id = key.id;
+               console.log(this.pro_id)
+           }
+        },
        buyurtmalar(){
             let self = this;
+            self.buyurtma.product_id = this.pro_id;
              if(this.$v.buyurtma.$invalid == false){
                 axios({
                     method: 'post',
